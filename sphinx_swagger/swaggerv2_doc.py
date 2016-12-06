@@ -122,12 +122,12 @@ class SwaggerV2DocDirective(Directive):
     def group_tags(self, api_desc):
         groups = {}
 
-        for tag in api_desc['tags']:
-            groups[tag['name']] = []
-
+        
         for path, methods in api_desc['paths'].items():
             for method_type, method in methods.items():
                 for tag in method['tags']:
+                    if tag not in groups:
+                        groups[tag]=[]
                     groups[tag].append((path, method_type, method))
 
         return groups
